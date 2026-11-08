@@ -906,21 +906,26 @@ button:hover {
    страница не растягивается, а прокручивается только список товаров внутри */
 /* На странице корзины вся страница ровно по высоте экрана: шапка и подвал на месте,
    область между ними занимает остаток, прокручивается только список товаров внутри корзины */
-body:has(.cart) {
+body:has(.cart),
+body:has(.favorites) {
   overflow: hidden;
 }
 
-#root:has(.cart) {
+#root:has(.cart),
+#root:has(.favorites) {
   height: 100vh;
 }
 
-.shell:has(.cart) {
+.shell:has(.cart),
+.shell:has(.favorites) {
   flex: 1;
   min-height: 0;
   grid-template-rows: minmax(0, 1fr);
 }
 
-.cart {
+/* Избранное и корзина: панель во всю высоту экрана; страница не прокручивается, прокручивается только список */
+.cart,
+.favorites {
   box-sizing: border-box;
   min-height: 0;
   padding: 24px;
@@ -944,6 +949,13 @@ body:has(.cart) {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Список избранного занимает свободное место и прокручивается внутри панели */
+.favorites-scroll {
   flex: 1;
   min-height: 0;
   overflow-y: auto;

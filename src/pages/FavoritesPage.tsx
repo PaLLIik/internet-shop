@@ -31,7 +31,10 @@ export default function FavoritesPage() {
       {favoriteProducts.length === 0 ? (
         <p>Пока пусто. Нажмите на сердечко у товара, и он появится здесь.</p>
       ) : (
-        <ProductGrid items={favoriteProducts} wrap onRemove={(id) => dispatch(toggleFavorite(id))} />
+        // Обёртка с прокруткой: много карточек листаются внутри панели, а не растягивают страницу
+        <div className="favorites-scroll">
+          <ProductGrid items={favoriteProducts} wrap onRemove={(id) => dispatch(toggleFavorite(id))} />
+        </div>
       )}
     </section>
   )
