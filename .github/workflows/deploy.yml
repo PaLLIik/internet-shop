@@ -1,0 +1,52 @@
+# Сборка и публикация сайта на GitHub Pages при каждом пуше в main
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Права, нужные для публикации на Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Не запускаем две публикации одновременно
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          # Сообщаем Vite, что сборка для GitHub Pages (см. vite.config.ts)
+          GITHUB_ACTIONS: 'true'
+      # GitHub Pages не знает про маршруты SPA: /cart отдаст 404.
+      # Копия index.html как 404.html позволяет открывать такие адреса напрямую
+      - run: cp dist/index.html dist/404.html
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

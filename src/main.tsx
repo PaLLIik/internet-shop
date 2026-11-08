@@ -9,7 +9,8 @@ import App from './App.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-    <BrowserRouter>
+    {/* basename — папка сайта: '/internet-shop' на GitHub Pages и '' локально */}
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
       <App />
     </BrowserRouter>
   </Provider>
