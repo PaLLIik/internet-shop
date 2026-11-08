@@ -955,10 +955,17 @@ body:has(.favorites) {
 }
 
 /* Список избранного занимает свободное место и прокручивается внутри панели */
+/* Полоса прокрутки стоит у правого края панели, а карточки отступают от неё внутри списка */
+.favorites {
+  padding-right: 0;
+}
+
 .favorites-scroll {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  padding-right: 24px;
+  scrollbar-gutter: stable;
 }
 
 .cart-item {
