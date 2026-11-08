@@ -930,7 +930,8 @@ body:has(.cart) {
   border-radius: 12px;
 }
 
-.cart h1 {
+.cart h1,
+.favorites h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
@@ -1036,9 +1037,15 @@ body:has(.cart) {
   margin-top: 24px;
 }
 
+/* Кнопка оформления: текст строго по центру по обеим осям */
 .checkout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 40px;
   padding: 0 20px;
+  line-height: 1;
+  font-weight: 600;
 }
 
 .cart-total {
@@ -1050,10 +1057,6 @@ body:has(.cart) {
   color: var(--text);
 }
 
-.checkout {
-  padding: 12px 20px;
-  font-weight: 600;
-}
 
 @media (max-width: 720px) {
   .cart-item {

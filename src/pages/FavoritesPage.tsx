@@ -25,7 +25,8 @@ export default function FavoritesPage() {
   const favoriteProducts = products.filter((product) => favoriteIds.includes(product.id))
 
   return (
-    <section>
+    // panel: та же плашка, что у сайдбара и корзины, поэтому колонки одной высоты и справа нет пустоты
+    <section className="favorites panel">
       <h1>Избранное</h1>
       {favoriteProducts.length === 0 ? (
         <p>Пока пусто. Нажмите на сердечко у товара, и он появится здесь.</p>
