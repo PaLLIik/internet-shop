@@ -14,9 +14,12 @@ const FOCUSABLE = [
 // Фокус внутри модального окна: при открытии фокус переходит в окно, Tab ходит по кругу внутри окна,
 // Esc закрывает, а при закрытии фокус возвращается на элемент, который окно открыл
 export function useDialogFocus(ref: RefObject<HTMLElement | null>, isOpen: boolean, onClose: () => void) {
-  // Храним актуальный onClose, чтобы эффект не перезапускался при каждом рендере родителя
+  // Храним актуальный onClose, чтобы эффект не перезапускался при каждом рендере родителя.
+  // Ref обновляем в эффекте, а не во время рендера: React не разрешает менять ref при рендере
   const onCloseRef = useRef(onClose)
-  onCloseRef.current = onClose
+  useEffect(() => {
+    onCloseRef.current = onClose
+  })
 
   useEffect(() => {
     const dialog = ref.current
